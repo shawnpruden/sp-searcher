@@ -5,38 +5,23 @@ import { Container, CssBaseline, Grid } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 
 import { theme } from './styles';
-import youtube from './apis/youtube';
 import VideoList from './components/VideoList';
 import VideoDetail from './components/VideoDetail';
+import useVideos from './hooks/useVideos';
 
 function App() {
-  const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [videos, search] = useVideos('しばいぬ');
 
   useEffect(() => {
-    handleTermSubmit('しばいぬ');
-  }, []);
-
-  const handleTermSubmit = async (term) => {
-    const response = await youtube.get('/search', {
-      params: {
-        q: term,
-      },
-    });
-
-    setVideos(response.data.items);
-    setSelectedVideo(response.data.items[0]);
-  };
-
-  const handleVideoSelect = (video) => {
-    setSelectedVideo(video);
-  };
+    setSelectedVideo(videos[0]);
+  }, [videos]);
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container align="center">
-        <SearchBar onTermSubmit={handleTermSubmit} />
+        <SearchBar onTermSubmit={search} />
         {selectedVideo && (
           <Grid
             container
@@ -52,7 +37,7 @@ function App() {
               <VideoDetail selectedVideo={selectedVideo} />
             </Grid>
             <Grid item lg={4} md={12}>
-              <VideoList videos={videos} onVideoSelect={handleVideoSelect} />
+              <VideoList videos={videos} onVideoSelect={setSelectedVideo} />
             </Grid>
           </Grid>
         )}
