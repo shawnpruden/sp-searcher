@@ -1,21 +1,14 @@
-import { Box, ListItem, ListItemText } from '@mui/material';
 import React from 'react';
+import { Box, ListItem, ListItemText } from '@mui/material';
+
+import { listItem } from './styles';
 
 export default function VideoItem({ video, onVideoSelect }) {
   return (
     <ListItem
       onClick={() => onVideoSelect(video)}
       alignItems="flex-start"
-      sx={{
-        display: 'flex',
-        textDecoration: 'none',
-        cursor: 'pointer',
-        padding: '8px',
-        margin: '8px',
-        borderRadius: '5px',
-        border: '2px solid transparent',
-        '&:hover': { border: '2px solid #512da8' },
-      }}
+      sx={listItem}
     >
       <Box
         component="img"

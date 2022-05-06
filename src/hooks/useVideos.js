@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import youtube from '../apis/youtube';
+import { getVideoData } from '../apis';
 
 export default function useVideos(defaultTerm) {
   const [videos, setVideos] = useState([]);
@@ -10,13 +10,9 @@ export default function useVideos(defaultTerm) {
   }, [defaultTerm]);
 
   const search = async (term) => {
-    const response = await youtube.get('/search', {
-      params: {
-        q: term,
-      },
-    });
+    const data = await getVideoData(term);
 
-    setVideos(response.data.items);
+    setVideos(data.items);
   };
 
   return [videos, search];

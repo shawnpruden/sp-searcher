@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { Box, Button, InputAdornment, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-export default function SearchBar({ onTermSubmit, onVideoSelect }) {
+import { form, input, button } from './styles.js';
+
+export default function SearchBar({ onTermSubmit }) {
   const [term, setTerm] = useState('');
 
   const handleSubmit = (e) => {
@@ -16,7 +18,7 @@ export default function SearchBar({ onTermSubmit, onVideoSelect }) {
       onSubmit={handleSubmit}
       noValidate
       autoComplete="off"
-      sx={{ marginTop: 3, display: 'flex', justifyContent: 'center' }}
+      sx={form}
     >
       <TextField
         type="text"
@@ -24,25 +26,21 @@ export default function SearchBar({ onTermSubmit, onVideoSelect }) {
         value={term}
         onChange={(e) => setTerm(e.target.value)}
         InputProps={{
-          style: { fontSize: '1rem' },
+          style: {
+            fontSize: '1rem',
+            padding: '0.8rem',
+          },
           startAdornment: (
-            <InputAdornment position="start">
+            <InputAdornment>
               <SearchIcon sx={{ fontSize: 30, color: 'primary.main' }} />
             </InputAdornment>
           ),
         }}
-        sx={{
-          width: '50%',
-          marginRight: '2rem',
-          color: 'primary.main',
-        }}
+        inputProps={{ style: { padding: '0 0.5rem' } }}
+        sx={input}
       />
 
-      <Button
-        type="submit"
-        variant="contained"
-        sx={{ height: 40, alignSelf: 'center' }}
-      >
+      <Button type="submit" variant="contained" sx={button}>
         Search
       </Button>
     </Box>

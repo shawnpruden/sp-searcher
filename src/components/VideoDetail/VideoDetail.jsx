@@ -1,18 +1,13 @@
-import { Box, Typography } from '@mui/material';
 import React from 'react';
+import { Box, Typography } from '@mui/material';
+
+import { videoDetailContainer } from './styles';
 
 export default function VideoDetail({ selectedVideo }) {
   return (
     <>
       {selectedVideo && (
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            padding: '16px 0',
-            textAlign: 'start',
-          }}
-        >
+        <Box sx={videoDetailContainer}>
           <Box
             component="iframe"
             src={`https://www.youtube.com/embed/${selectedVideo.id.videoId}`}
@@ -35,4 +30,3 @@ export default function VideoDetail({ selectedVideo }) {
     </>
   );
 }
-// <div>{selectedVideo && <div></div>}</div>

@@ -1,6 +1,6 @@
 import { Divider, List } from '@mui/material';
 import React from 'react';
-import VideoItem from './VideoItem';
+import VideoItem from '../VideoItem/VideoItem';
 
 export default function VideoList({ videos, onVideoSelect }) {
   const renderedList = videos.map((video) => {
@@ -11,5 +11,5 @@ export default function VideoList({ videos, onVideoSelect }) {
       </React.Fragment>
     );
   });
-  return <List sx={{ padding: '0 8px' }}>{renderedList}</List>;
+  return <List sx={{ padding: '0 8px', width: '100%' }}>{renderedList}</List>;
 }

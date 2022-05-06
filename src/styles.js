@@ -1,7 +1,7 @@
 import { deepPurple } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
 
-const theme = createTheme({
+export const theme = createTheme({
   palette: {
     primary: deepPurple,
     background: {
@@ -17,4 +17,10 @@ const theme = createTheme({
   },
 });
 
-export { theme };
+export const container = {
+  background: '#FBF6F0',
+  margin: '2rem 0',
+  padding: '0 16px 16px 16px',
+  border: '2px solid #D9D7F1',
+  borderRadius: '5px',
+};
