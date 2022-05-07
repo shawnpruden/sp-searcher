@@ -1,38 +1,61 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import SearchBar from './components/SearchBar/SearchBar';
 
-import { Container, CssBaseline, Grid } from '@mui/material';
+import {
+  Button,
+  ButtonGroup,
+  Container,
+  CssBaseline,
+  Box,
+} from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 
-import { theme, container } from './styles';
-import VideoList from './components/VideoList/VideoList';
-import VideoDetail from './components/VideoDetail/VideoDetail';
 import useVideos from './hooks/useVideos';
+import useImages from './hooks/useImages';
+
+import { theme, navBar } from './styles';
+import VideoSearch from './pages/VideoSearch';
+import ImageSearch from './pages/ImageSearch';
+
+import { Link, Route, Routes } from 'react-router-dom';
 
 function App() {
-  const [selectedVideo, setSelectedVideo] = useState(null);
-  const [videos, search] = useVideos('しばいぬ');
+  const [videos, searchVideos] = useVideos('しばいぬ');
+  const [images, searchImages] = useImages('shiba');
 
-  useEffect(() => {
-    setSelectedVideo(videos[0]);
-  }, [videos]);
+  const [toggle, setToggle] = useState(false);
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container align="center">
-        <SearchBar onTermSubmit={search} />
-
-        {selectedVideo && (
-          <Grid container sx={container}>
-            <Grid item lg={8} md={12}>
-              <VideoDetail selectedVideo={selectedVideo} />
-            </Grid>
-            <Grid item lg={4} md={12} sx={{ width: '100%' }}>
-              <VideoList videos={videos} onVideoSelect={setSelectedVideo} />
-            </Grid>
-          </Grid>
-        )}
+        <Box component="nav" sx={navBar}>
+          <ButtonGroup variant="outlined" size="small" sx={{ height: 30 }}>
+            <Button sx={{ padding: 0 }}>
+              <Link
+                to="/video"
+                style={{ padding: '0.2rem 0.4rem' }}
+                onClick={() => setToggle(false)}
+              >
+                Video
+              </Link>
+            </Button>
+            <Button sx={{ padding: 0 }}>
+              <Link
+                to="/image"
+                style={{ padding: '0.2rem 0.4rem' }}
+                onClick={() => setToggle(true)}
+              >
+                Image
+              </Link>
+            </Button>
+          </ButtonGroup>
+          <SearchBar onTermSubmit={toggle ? searchImages : searchVideos} />
+        </Box>
+        <Routes>
+          <Route path="/video" element={<VideoSearch videos={videos} />} />
+          <Route path="/image" element={<ImageSearch images={images} />} />
+        </Routes>
       </Container>
     </ThemeProvider>
   );

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Button, InputAdornment, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-import { form, input, button } from './styles.js';
+import { form, input } from './styles.js';
 
 export default function SearchBar({ onTermSubmit }) {
   const [term, setTerm] = useState('');
@@ -19,6 +19,7 @@ export default function SearchBar({ onTermSubmit }) {
       noValidate
       autoComplete="off"
       sx={form}
+      className="search-bar"
     >
       <TextField
         type="text"
@@ -31,16 +32,16 @@ export default function SearchBar({ onTermSubmit }) {
             padding: '0.8rem',
           },
           startAdornment: (
-            <InputAdornment>
+            <InputAdornment position="start">
               <SearchIcon sx={{ fontSize: 30, color: 'primary.main' }} />
             </InputAdornment>
           ),
         }}
-        inputProps={{ style: { padding: '0 0.5rem' } }}
+        inputProps={{ style: { padding: '0' } }}
         sx={input}
       />
 
-      <Button type="submit" variant="contained" sx={button}>
+      <Button type="submit" variant="contained" sx={{ height: 40 }}>
         Search
       </Button>
     </Box>

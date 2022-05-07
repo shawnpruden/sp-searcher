@@ -1,13 +1,14 @@
 export const form = {
-  marginTop: 3,
   display: 'flex',
   justifyContent: 'center',
+  alignItems: 'center',
+
+  marginLeft: '1rem',
+  width: '50%',
 };
 
 export const input = {
-  width: '50%',
+  width: '100%',
   marginRight: '1rem',
   color: 'primary.main',
 };
-
-export const button = { height: 40, alignSelf: 'center' };
