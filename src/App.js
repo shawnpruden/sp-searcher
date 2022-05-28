@@ -17,7 +17,7 @@ import { theme, navBar } from './styles';
 import VideoSearch from './pages/VideoSearch';
 import ImageSearch from './pages/ImageSearch';
 
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes, Navigate } from 'react-router-dom';
 
 function App() {
   const [videos, searchVideos] = useVideos('しばいぬ');
@@ -53,6 +53,7 @@ function App() {
           <SearchBar onTermSubmit={toggle ? searchImages : searchVideos} />
         </Box>
         <Routes>
+          <Route path="/" element={<Navigate replace to="/video" />} />
           <Route path="/video" element={<VideoSearch videos={videos} />} />
           <Route path="/image" element={<ImageSearch images={images} />} />
         </Routes>
