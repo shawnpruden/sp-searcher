@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Box, Button, Modal } from '@mui/material';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 
@@ -10,13 +10,8 @@ function ImageCard({ images }) {
 
   const imgRef = useRef();
 
-  useEffect(() => {
-    imgRef.current.addEventListener('load', handleSpans);
-  }, []);
-
   const handleSpans = () => {
     const height = imgRef.current.clientHeight;
-
     setSpans(Math.ceil(height));
   };
 
@@ -30,6 +25,7 @@ function ImageCard({ images }) {
         src={images.urls.regular}
         alt={images.description}
         style={image}
+        onLoad={handleSpans}
       />
       <Button onClick={() => setIsOpen((prevState) => !prevState)} sx={button}>
         <ZoomInIcon />

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Grid } from '@mui/material';
+import { Box, CircularProgress, Grid } from '@mui/material';
 
 import VideoDetail from '../components/VideoDetail/VideoDetail';
 import VideoList from '../components/VideoList/VideoList';
 
-import { container } from './styles';
+import { container, loader } from './styles';
 
 function VideoSearch({ videos }) {
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -15,7 +15,7 @@ function VideoSearch({ videos }) {
 
   return (
     <>
-      {selectedVideo && (
+      {selectedVideo ? (
         <Grid container sx={container}>
           <Grid item lg={8} md={12}>
             <VideoDetail selectedVideo={selectedVideo} />
@@ -24,6 +24,10 @@ function VideoSearch({ videos }) {
             <VideoList videos={videos} onVideoSelect={setSelectedVideo} />
           </Grid>
         </Grid>
+      ) : (
+        <Box sx={loader} style={{ marginTop: '2rem' }}>
+          <CircularProgress size={80} sx={{ color: '#673ab7' }} />
+        </Box>
       )}
     </>
   );

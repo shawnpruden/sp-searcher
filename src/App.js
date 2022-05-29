@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link, Route, Routes, Navigate, useLocation } from 'react-router-dom';
+
 import SearchBar from './components/SearchBar/SearchBar';
 
 import {
@@ -17,13 +19,23 @@ import { theme, navBar } from './styles';
 import VideoSearch from './pages/VideoSearch';
 import ImageSearch from './pages/ImageSearch';
 
-import { Link, Route, Routes, Navigate } from 'react-router-dom';
-
 function App() {
-  const [videos, searchVideos] = useVideos('しばいぬ');
-  const [images, searchImages] = useImages('shiba');
+  const { pathname } = useLocation();
+  const [type, setType] = useState(pathname.slice(1));
+  const [input, setInput] = useState('shiba');
 
-  const [toggle, setToggle] = useState(false);
+  const [videos, searchVideos] = useVideos('しばいぬ', type);
+  const [images, searchImages] = useImages(input, type);
+
+  const handleType = () => {
+    if (type === 'video') {
+      return searchVideos;
+    } else if (type === 'image') {
+      return searchImages;
+    }
+  };
+
+  const selectedType = handleType();
 
   return (
     <ThemeProvider theme={theme}>
@@ -35,7 +47,7 @@ function App() {
               <Link
                 to="/video"
                 style={{ padding: '0.2rem 0.4rem' }}
-                onClick={() => setToggle(false)}
+                onClick={() => setType('video')}
               >
                 Video
               </Link>
@@ -44,18 +56,28 @@ function App() {
               <Link
                 to="/image"
                 style={{ padding: '0.2rem 0.4rem' }}
-                onClick={() => setToggle(true)}
+                onClick={() => setType('image')}
               >
                 Image
               </Link>
             </Button>
           </ButtonGroup>
-          <SearchBar onTermSubmit={toggle ? searchImages : searchVideos} />
+          <SearchBar
+            onTermSubmit={selectedType}
+            type={type}
+            setInput={setInput}
+          />
         </Box>
         <Routes>
           <Route path="/" element={<Navigate replace to="/video" />} />
-          <Route path="/video" element={<VideoSearch videos={videos} />} />
-          <Route path="/image" element={<ImageSearch images={images} />} />
+          <Route
+            path="/video"
+            element={<VideoSearch videos={videos} type={type} />}
+          />
+          <Route
+            path="/image"
+            element={<ImageSearch images={images} type={type} input={input} />}
+          />
         </Routes>
       </Container>
     </ThemeProvider>

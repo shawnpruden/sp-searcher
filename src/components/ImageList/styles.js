@@ -7,4 +7,10 @@ export const container = {
   display: 'grid',
   gridTemplateColumns: 'repeat(4, 1fr)',
   gridAutoRows: '1px',
+
+  position: 'absolute',
+  top: 0,
+  left: 0,
+
+  opacity: 0,
 };

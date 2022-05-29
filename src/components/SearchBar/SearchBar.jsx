@@ -1,15 +1,43 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Box, Button, InputAdornment, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-import { form, input } from './styles.js';
+import { form, textField } from './styles.js';
 
-export default function SearchBar({ onTermSubmit }) {
-  const [term, setTerm] = useState('');
+export default function SearchBar({ onTermSubmit, type, setInput }) {
+  const [term, setTerm] = useState('shiba');
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    if (term) {
+      type === 'image' && onTermSubmit(term, page);
+    }
+  }, [page, type]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [term, type]);
+
+  const handleScroll = useCallback(() => {
+    if (
+      Math.floor(window.innerHeight + window.scrollY) ===
+      document.documentElement.scrollHeight
+    ) {
+      type === 'image' && setPage((preState) => preState + 1);
+    }
+  }, [type]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [type, handleScroll]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onTermSubmit(term);
+
+    setInput(term);
+    onTermSubmit(term, page);
   };
 
   return (
@@ -38,7 +66,7 @@ export default function SearchBar({ onTermSubmit }) {
           ),
         }}
         inputProps={{ style: { padding: '0' } }}
-        sx={input}
+        sx={textField}
       />
 
       <Button type="submit" variant="contained" sx={{ height: 40 }}>

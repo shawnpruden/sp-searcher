@@ -7,7 +7,7 @@ export const form = {
   width: '50%',
 };
 
-export const input = {
+export const textField = {
   width: '100%',
   marginRight: '1rem',
   color: 'primary.main',

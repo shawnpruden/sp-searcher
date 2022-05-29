@@ -1,14 +1,17 @@
-import { Container } from '@mui/material';
 import React from 'react';
-import ImageList from '../components/ImageList/ImageList';
 
-function ImageSearch({ images }) {
+import { Box, CircularProgress, Container } from '@mui/material';
+import ImageList from '../components/ImageList/ImageList';
+import { loader } from './styles';
+
+function ImageSearch({ images, type, input }) {
   return (
-    <>
-      <Container style={{ marginTop: '2rem' }}>
-        <ImageList images={images} />
-      </Container>
-    </>
+    <Container style={{ marginTop: '2rem', position: 'relative' }}>
+      <Box sx={loader}>
+        <CircularProgress size={80} sx={{ color: '#673ab7' }} />
+      </Box>
+      <ImageList images={images} type={type} input={input} />
+    </Container>
   );
 }
 

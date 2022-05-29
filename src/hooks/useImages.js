@@ -1,17 +1,22 @@
 import { useEffect, useState } from 'react';
 import { getImageData } from '../apis/unsplash';
 
-export default function useImages(defaultTerm) {
+export default function useImages(input, type) {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
-    searchImages(defaultTerm);
-  }, [defaultTerm]);
+    type === 'video' && searchImages(input, 1);
+  }, []);
 
-  const searchImages = async (term) => {
-    const data = await getImageData(term);
+  useEffect(() => {
+    setImages([]);
+  }, [input, type]);
 
-    setImages(data.results);
+  const searchImages = async (term, page) => {
+    const data = await getImageData(term, page);
+
+    setImages((prevImages) => [...prevImages, ...data.results]);
   };
+
   return [images, searchImages];
 }

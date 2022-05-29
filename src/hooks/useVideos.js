@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 
 import { getVideoData } from '../apis/youtube';
 
-export default function useVideos(defaultTerm) {
+export default function useVideos(defaultTerm, type) {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    searchVideos(defaultTerm);
-  }, [defaultTerm]);
+    type === 'video' && searchVideos(defaultTerm);
+  }, [defaultTerm, type]);
 
   const searchVideos = async (term) => {
     const data = await getVideoData(term);
