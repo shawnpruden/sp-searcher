@@ -5,12 +5,6 @@ export default function useImages(input, type) {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
-    type === 'video' && searchImages(input, 1);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
     setImages([]);
   }, [input, type]);
 

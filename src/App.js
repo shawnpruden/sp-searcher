@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Route, Routes, Navigate, useLocation } from 'react-router-dom';
 
 import SearchBar from './components/SearchBar/SearchBar';
@@ -24,8 +24,17 @@ function App() {
   const [type, setType] = useState(pathname.slice(1));
   const [input, setInput] = useState('shiba');
 
-  const [videos, searchVideos] = useVideos('しばいぬ', type);
+  const [videos, searchVideos] = useVideos('しばいぬ');
   const [images, searchImages] = useImages(input, type);
+
+  useEffect(() => {
+    if (!type) {
+      setType('video');
+    }
+
+    window.addEventListener('resize', () => window.location.reload());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleType = () => {
     if (type === 'video') {
@@ -65,6 +74,7 @@ function App() {
           <SearchBar
             onTermSubmit={selectedType}
             type={type}
+            input={input}
             setInput={setInput}
           />
         </Box>

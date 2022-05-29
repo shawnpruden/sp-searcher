@@ -4,13 +4,15 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import { form, textField } from './styles.js';
 
-export default function SearchBar({ onTermSubmit, type, setInput }) {
+export default function SearchBar({ onTermSubmit, type, input, setInput }) {
   const [term, setTerm] = useState('shiba');
   const [page, setPage] = useState(1);
 
   useEffect(() => {
     if (term) {
       type === 'image' && onTermSubmit(term, page);
+    } else {
+      type === 'image' && onTermSubmit(input, page);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
