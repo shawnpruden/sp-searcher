@@ -6,6 +6,8 @@ export default function useImages(input, type) {
 
   useEffect(() => {
     type === 'video' && searchImages(input, 1);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

@@ -12,6 +12,8 @@ export default function SearchBar({ onTermSubmit, type, setInput }) {
     if (term) {
       type === 'image' && onTermSubmit(term, page);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, type]);
 
   useEffect(() => {
